@@ -1,0 +1,46 @@
+{% extends 'account/base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% load i18n %}
+{% load account socialaccount %}
+{% block content %}
+<style>
+     .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    
+    
+</style>
+
+<div class="form-pages">
+    <div class=" form-signin pt-5 mt-5">
+        <div class="d-flex justify-content-center  ">
+           <div class="card p-4">
+            <img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+            <center><p>{% blocktrans %}If you have not created an account yet, then please
+                <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p></center>
+            <form class="login" method="POST" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+                <a class="btn btn-grey" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                <input type="submit" value="Sign In" class="btn btn-primary">
+              </form>
+           </div>
+        </div>
+     
+    </div>
+</div>
+{% endblock content %}

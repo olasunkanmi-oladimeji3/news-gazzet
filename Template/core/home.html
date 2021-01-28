@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<main class="container ">
+   
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+
+    <!-- Navbar brand -->
+    <span class="navbar-brand text-secondary">Categories:</span>
+
+    <!-- Collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+      aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="basicExampleNav">
+
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto ">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'zenithal:home'%}">All
+            
+          </a>
+        </li>
+        {% for c in catalog %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{c.get_absolute_url}}">{{c.catalog}}</a>
+        </li>
+
+        {% endfor %}
+      </ul>
+      <!-- Links -->
+
+      <form class="form-inline" role="search" action="." method="get">
+        <div class="md-form my-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name='q'>
+        </div>
+      </form>
+    </div>
+    <!-- Collapsible content -->
+
+  </nav>
+   
+    <div class="row pt-3 mt-3">
+      <div class="col-md-8">
+        <h3 class="pb-4 mb-4 font-italic border-bottom">
+          {% if category %} From the Zenithal Reporters : {{category.catalog}} {%else%} From the Zenithal Reporters {% endif %}
+          
+        </h3>
+        
+        {% if query %}
+        {% if results %}
+          {% for post in results %}
+            {% include 'include/posts.html' %}
+          {% endfor %}
+        {% else %}
+            <h4>No context Found</h4>
+        {% endif %}
+      {% else %}
+        {% for post in users %}
+          {% include 'include/posts.html' %}
+        {% endfor %}
+      {% endif %}
+        
+        <center>
+          <nav class="navbar" aria-label="Pagination">
+            {% if users.has_other_pages %}
+            {% if users.has_previous %}
+              
+              <a class="btn btn-outline-primary" href="?page={{ users.previous_page_number }}">&laquo;  Newer  </a>
+          
+            {% endif %}
+            
+
+            {% if users.has_next %}
+            <a class="btn btn-outline-secondary " href="?page={{ users.next_page_number }}" tabindex="-1" aria-disabled="true">Older &raquo;</a>
+            
+            
+            {% endif %}
+           
+            {% endif %}
+          </nav>
+        </center>
+  
+      </div>
+  
+      <div class="col-md-4">
+        <div class="p-4 mb-3 bg-light rounded">
+          <h4 class="font-italic">About</h4>
+          <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+        </div>
+  
+        <div class="p-4">
+          <h4 class="font-italic">Archives</h4>
+          <div class="list-group">
+            {% for post in post_lists %}
+            <a href="{{post.get_absolute_url}}" class="list-group-item list-group-item-action">{{post.title}}
+              <br><span>Posted by: {{post.author}},</span> <span>{{post.published_date|date:"D M Y"}}</span></a>
+      
+        {% endfor %}
+        </div>
+  
+        
+      </div>
+  
+    </div><!-- /.row -->
+  
+  </main>
+
+{% endblock content %}

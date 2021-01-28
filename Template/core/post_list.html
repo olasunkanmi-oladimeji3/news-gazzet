@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+ 
+   <div class="container">
+    <div class="p-4">
+       <center> <h2 class="font-italic">Archives</h2></center>
+        <div class="list-group">
+          {% for post in post_list %}
+          <a href="{{post.get_absolute_url}}" class="list-group-item list-group-item-action">{{post.title}}
+            <br><span>Posted by: {{post.author}},</span> <span>{{post.published_date|date:"D M Y"}}</span></a>
+    
+      {% endfor %}
+      </div>
+
+      
+    </div>
+   </div>
+{% endblock content %}

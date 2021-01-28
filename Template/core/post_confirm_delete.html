@@ -1,0 +1,25 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+
+<div class="mt-5 pt-5">
+ <center> {% block head_title %}{% trans "Delete Post" %}{% endblock %}
+</center>
+{% block content %}
+<div class="container">
+ <center>
+  <h1 class="mt-5 pt-4">{% trans "Delete Post" %}</h1>
+
+  <p>{% trans 'Are you sure you want to Delete Post?' %}</p>
+  
+  <form method="post" action="">
+    {% csrf_token %}
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+    {% endif %}
+    <button type="submit" class="btn btn-danger ">{% trans 'Delete Post' %}</button>
+  </form>
+ </center>
+</div>
+</div>
+
+{% endblock content %}

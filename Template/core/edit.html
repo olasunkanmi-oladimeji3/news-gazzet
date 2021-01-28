@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+{% load i18n %}
+{% block content %}
+  <main class="pt-5">
+    <div class="container-sm">
+      <h1>Edit Post</h1>
+      <form method="POST" class="post-form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <br>
+        
+      <button type="submit" class="btn btn-outline-primary">Save</button>
+      </form>
+    </div>
+  </main>
+
+    <script>var editor = new MediumEditor('.editable');</script>
+
+{% endblock content %}

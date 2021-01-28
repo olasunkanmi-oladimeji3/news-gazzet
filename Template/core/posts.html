@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Page Header -->
+  <header class="masthead" style="background-image: url(})">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          {% if post.photo %}
+          <div class="view overlay zoom pt-3">
+            <img src="{{post.photo.url}}" class="card-img-top" height="300px"
+                alt="">
+            <a href="{{post.get_absolute_url}}">
+                <div class="mask rgba-white-slight zoom"></div>
+            </a>
+            </div>
+          
+          {%  endif %}
+
+            {% if post.video%}
+            <video  class="card-img-top pt-3" height="300px" controls>
+              <source src="{{post.video.url}}" type="video/mp4">
+              <source src="movie.ogg" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+            {% endif %}
+          <div class="post-heading">
+            <h1>{{post.title}}</h1>
+            <span class="meta">Posted by
+              <a href="#">{{post.author}},</a>
+              {{post.published_date|date:"D M Y"}}</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          
+          <p>{{post.context|safe|linebreaks }}.</p>
+
+          {% if request.user.is_superuser %}
+          <div class="pb-5">
+            
+            <a class="btn btn-primary" href="{% url 'zenithal:post_edit' pk=post.pk %}"><span class="fa fa-pencil">Edit</span></a>
+            <a class="btn btn-primary" href="{% url 'zenithal:post_remove' pk=post.pk %}"><span class="fa fa-remove">Delete</span></a>
+            <a class="btn btn-outline-dark" href="{% url 'zenithal:post_publish' pk=post.pk %}">Publish</a>
+
+            {% if post.published_date %}
+              <div class="date postdate">
+                  {{ post.published_date }}
+              </div>
+
+         
+          
+             {% endif %}
+            </div>
+         {% endif %}
+
+        </div>
+
+        <hr>
+  
+  </article>
+
+  <div class="row ">
+    {% for post in items %}
+      
+      
+        
+            {% if post.photo %}
+            <div class="col-md-3">
+              <div class="card h-100">
+              <div class="view overlay zoom">
+                <img src="{{post.photo.url}}" class="card-img-top" height="300px"
+                    alt="">
+                <a href="{{post.get_absolute_url}}">
+                    <div class="mask rgba-white-slight zoom"></div>
+                </a>
+                </div>
+                <div class="card-body">
+                  <a href="{{post.get_absolute_url}}" class="nav-link text-secondary">
+                    <h5 class="card-title">{{post.title}}</h5>
+                  <p class="card-text "><span class="text-secondary">{{post.context|safe|truncatewords:"50"|linebreaks }}</span></p>
+                  </a>
+                  
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted">{{post.published_date}} <a href="#">{{post.author}}</a></small>
+                </div>
+              </div>
+            </div>
+            {%  elif post.video %}
+            <div class="col-md-3">
+              <div class="card h-100">
+  
+                <video  class="card-img-top" height="300px" controls>
+                  <source src="{{post.video.url}}" type="video/mp4">
+                  <source src="movie.ogg" type="video/ogg">
+                  Your browser does not support the video tag.
+                </video>
+                <div class="card-body">
+                  <a href="{{post.get_absolute_url}}" class="nav-link text-secondary">
+                    <h5 class="card-title">{{post.title}}</h5>
+                  <p class="card-text "><span class="text-secondary">{{post.context|safe|truncatewords:"50"|linebreaks }}</span></p>
+                  </a>
+                  
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted">{{post.published_date}} <a href="#">{{post.author}}</a></small>
+                </div>
+              </div>
+            </div>
+            
+            {% else %}
+            <div class="col-md-3">
+              <div class="card ">
+              <div class="card-body">
+                <a href="{{post.get_absolute_url}}" class="nav-link text-secondary">
+                  <h5 class="card-title">{{post.title}}</h5>
+                <p class="card-text "><span class="text-secondary">{{post.context|safe|truncatewords:"50"|linebreaks }}</span></p>
+                </a>
+                
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">{{post.published_date}} <a href="#">{{post.author}}</a></small>
+              </div>
+            </div>
+          </div>
+
+            {% endif%}
+            
+          
+    {% endfor %}
+      
+    </div>
+
+
+{% endblock content %}

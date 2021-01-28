@@ -1,0 +1,32 @@
+
+      
+        <article class="blog-post">
+          {% if post.photo %}
+          <div class="view overlay zoom">
+            <img src="{{post.photo.url}}" class="card-img-top" height="300px"
+                alt="">
+            <a href="{{post.get_absolute_url}}">
+                <div class="mask rgba-white-slight zoom"></div>
+            </a>
+            </div>
+          
+          {%  endif %}
+
+            {% if post.video%}
+            <video  class="card-img-top" height="300px" controls>
+              <source src="{{post.video.url}}" type="video/mp4">
+              <source src="movie.ogg" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+            {% endif %}
+          <a href="{{post.get_absolute_url}}"><h2 class="blog-post-title">{{post.title}}</h2></a>
+          <p class="blog-post-meta">{{post.published_date}} <a href="#">{{post.author}}</a></p>
+  
+        
+          <p>
+            {{post.context|safe|truncatewords:"50"|linebreaks }}
+             <a href="{{post.get_absolute_url}}">read more</a>
+          </p>
+        </article><!-- /.blog-post -->
+        <hr>
+     
